@@ -1,14 +1,20 @@
 <?php
-$conn_error='Could not connect';
+require 'connect.inc.php';
 
-$mysql_host ='localhost';
-$mysql_user='root';
-$mysql_pass='';
+$query =" SELECT username,password FROM users ORDER BY ID ";
 
-$mysql_db='a_database';
+if($query_run = mysqli_query($connection,$query)){
+	
+while($query_row= mysqli_fetch_assoc($query_run)){
+	$name =$query_row['username'];
+	$password=$query_row['password'];
+	
+	echo $name.' password is '.$password.' <br>';
+}
+}
+else{
+	echo mysqli_error();
+}
+	
 
-$connection=mysqli_connect($mysql_host,$mysql_user,$mysql_pass)or die($conn_error);
-mysqli_select_db($connection,$mysql_db)or die($conn_error);
-
-echo 'connected';
 ?>
